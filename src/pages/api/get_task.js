@@ -1,14 +1,14 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-import User from 'models/user.model';
+import Task from 'models/task.model';
 import { connectDB } from 'setup/connectDb';
 
 export default async function handler(req, res) {
-  if (req.method === 'POST') {
+  if (req.method === 'GET') {
     try {
       await connectDB();
-      const user = await User.create(req.body);
-      return res.status(200).json(user);
+      const tasks = await Task.findOne(red.query.taskId);
+      return res.status(200).json(tasks);
     } catch (error) {
       return res.status(500).json(error.message);
     }

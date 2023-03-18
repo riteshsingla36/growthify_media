@@ -9,7 +9,7 @@ const taskSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "user"
     },
-    onBordingResource: {
+    onBoardingResource: {
         type: String,
         trim: true
     },
