@@ -11,30 +11,36 @@ const userSchema = mongoose.Schema({
         type: String,
         trim: true,
         unique: true,
-        required: true,
+        required: true
     },
     userId: {
         type: String,
         trim: true,
         unique: true,
-        required: true,
+        required: true
     },
     phoneNo: {
         type: Number,
         max: 9999999999,
         trim: true,
         unique: true,
-        required: true,
+        required: true
     },
     userType: {
         type: String,
         trim: true,
-        enum: ['Employee', 'Client']
+        enum: ['Employee', 'Client'],
+        required: true
     },
     status: {
         type: String,
         trim: true,
         enum: ['ACTIVE', 'INACTIVE']
+    },
+    createdBy: {
+        type: String,
+        trim: true,
+        required: true
     }
 
 },
