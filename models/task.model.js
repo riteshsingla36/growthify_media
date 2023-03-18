@@ -2,12 +2,12 @@ const mongoose = require('mongoose');
 
 const taskSchema = mongoose.Schema({
     assignor: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "user"
+        type: String,
+        trim: true
     },
     assignee: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "user"
+        type: String,
+        trim: true
     },
     onBoardingResource: {
         type: String,
@@ -19,8 +19,8 @@ const taskSchema = mongoose.Schema({
         required: true
     },
     updatedBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "user"
+        type: String,
+        trim: true
     },
     createdBy: {
         type: String,
