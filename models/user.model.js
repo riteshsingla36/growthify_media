@@ -4,7 +4,8 @@ const userSchema = mongoose.Schema({
     name: {
         type: String,
         trim: true,
-        required: true
+        required: true,
+        unique: true
     },
     email: {
         type: String,
@@ -12,15 +13,11 @@ const userSchema = mongoose.Schema({
         unique: true,
         required: true,
     },
-    userName: {
+    userId: {
         type: String,
         trim: true,
         unique: true,
         required: true,
-    },
-    password: {
-        type: String,
-        trim: true
     },
     phoneNo: {
         type: Number,
@@ -29,18 +26,15 @@ const userSchema = mongoose.Schema({
         unique: true,
         required: true,
     },
-    isAdmin: {
-        type: Boolean,
-        default: false,
-    },
-    verified: {
-        type: Boolean,
-        default: false
-    },
     userType: {
         type: String,
-        enum: ['employee', 'client'],
-        default: 'employee'
+        trim: true,
+        enum: ['Employee', 'Client']
+    },
+    status: {
+        type: String,
+        trim: true,
+        enum: ['ACTIVE', 'INACTIVE']
     }
 
 },
