@@ -23,8 +23,7 @@ const taskSchema = mongoose.Schema({
         ref: "user"
     },
     createdBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "user",
+        type: String,
         required: true
     },
     status: {
