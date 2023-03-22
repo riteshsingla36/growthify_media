@@ -37,6 +37,10 @@ const userSchema = mongoose.Schema({
         trim: true,
         enum: ['ACTIVE', 'INACTIVE']
     },
+    role: {
+        type: String,
+        trim: true
+    },
     createdBy: {
         type: String,
         trim: true,
