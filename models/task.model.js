@@ -9,14 +9,36 @@ const taskSchema = mongoose.Schema({
         type: String,
         trim: true
     },
-    onBoardingResource: {
+    client: {
         type: String,
+        trim: true
+    },
+    priority: {
+        type: String,
+        enum: ['high', 'medium', low],
+        default: 'medium',
         trim: true
     },
     description: {
         type: String,
         trim: true,
         required: true
+    },
+    supportingLink: {
+        type: String,
+        trim: true
+    },
+    supportingRemarks: {
+        type: String,
+        trim: true
+    },
+    review: {
+        type: String,
+        trim: true
+    },
+    deadline: {
+        type: String,
+        trim: true
     },
     updatedBy: {
         type: String,
