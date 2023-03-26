@@ -46,7 +46,7 @@ function Customers(props) {
               <th>{user.GSTIN}</th>
               <th>{user.billingAddress}</th>
               <th>{user.stateCode}</th>
-              <th><Link href={`/generate_invoice?clientId=${user.userId}`} ><button style={{color: 'white', backgroundColor: "#00264D", borderRadius: '10px'}}>Generate Invoice</button></Link></th>
+              <th><Link href={`/generate_invoice?clientId=${user._id}`} ><button style={{color: 'white', backgroundColor: "#00264D", borderRadius: '10px'}}>Generate Invoice</button></Link></th>
             </tr>
           );
         })}

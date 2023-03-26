@@ -37,7 +37,7 @@ const taskSchema = mongoose.Schema({
         trim: true
     },
     deadline: {
-        type: String,
+        type: Date,
         trim: true
     },
     updatedBy: {
