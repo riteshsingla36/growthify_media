@@ -5,9 +5,16 @@ import { connectDB } from 'setup/connectDb';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
+    const userType = req.query.userType;
     try {
       await connectDB();
-      const users = await User.find({});
+      let users;
+      if(userType) {
+        users = await User.find({userType: userType});
+      }
+      else {
+        users = await User.find({});
+      }
       return res.status(200).json(users);
     } catch (error) {
       return res.status(500).json(error.message);
