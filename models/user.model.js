@@ -42,10 +42,10 @@ const userSchema = mongoose.Schema(
       type: String,
       trim: true,
     },
-    projects: {
+    projects: [{
       type: String,
       trim: true,
-    },
+    }],
     billingAddress: {
       type: String,
       trim: true,
