@@ -40,6 +40,10 @@ const taskSchema = mongoose.Schema({
         type: Date,
         trim: true
     },
+    project: {
+        type: String,
+        trim: true
+    },
     updatedBy: {
         type: String,
         trim: true
