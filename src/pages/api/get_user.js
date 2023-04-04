@@ -10,7 +10,7 @@ export default async function handler(req, res) {
       await connectDB();
       let user;
       if(name) {
-        user = await User.find({name: name});
+        user = await User.findOne({name: name});
       }
       else {
         user = await User.find({});
