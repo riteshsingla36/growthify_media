@@ -5,12 +5,12 @@ import { connectDB } from 'setup/connectDb';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
-    const name = req.query.name;
+    const userId = req.query.userId;
     try {
       await connectDB();
       let user;
-      if(name) {
-        user = await User.findOne({name: name});
+      if(userId) {
+        user = await User.findOne({userId: userId});
       }
       else {
         user = await User.findOne({});
