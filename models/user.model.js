@@ -10,8 +10,7 @@ const userSchema = mongoose.Schema(
     },
     email: {
       type: String,
-      trim: true,
-      unique: true
+      trim: true
     },
     userId: {
       type: String,
@@ -22,8 +21,7 @@ const userSchema = mongoose.Schema(
     phoneNo: {
       type: Number,
       max: 9999999999,
-      trim: true,
-      unique: true
+      trim: true
     },
     userType: {
       type: String,
