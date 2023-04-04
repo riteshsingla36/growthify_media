@@ -5,12 +5,12 @@ import { connectDB } from 'setup/connectDb';
 
 export default async function handler(req, res) {
   if (req.method === 'PATCH') {
-    const email = req.query.email;
+    const id = req.query.id;
     try {
       await connectDB();
       let user;
-      if(email) {
-        user = await User.findOneAndUpdate({email: email}, req.body, {runValidators: true});
+      if(id) {
+        user = await User.findOneAndUpdate({_id: id}, req.body, {runValidators: true});
         return res.status(200).json(user);
       }
       return res.status(200).json({})
