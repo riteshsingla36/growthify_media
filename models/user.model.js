@@ -11,8 +11,7 @@ const userSchema = mongoose.Schema(
     email: {
       type: String,
       trim: true,
-      unique: true,
-      required: true,
+      unique: true
     },
     userId: {
       type: String,
@@ -24,8 +23,7 @@ const userSchema = mongoose.Schema(
       type: Number,
       max: 9999999999,
       trim: true,
-      unique: true,
-      required: true,
+      unique: true
     },
     userType: {
       type: String,
