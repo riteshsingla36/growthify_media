@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   if (req.method === 'GET') {
     try {
       await connectDB();
-      const tasks = await Task.find({});
+      const tasks = await Task.find({assignee: req.query.assignee});
       return res.status(200).json(tasks);
     } catch (error) {
       return res.status(500).json(error.message);
