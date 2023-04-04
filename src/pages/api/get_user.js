@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         user = await User.findOne({name: name});
       }
       else {
-        user = await User.find({});
+        user = await User.findOne({});
       }
       return res.status(200).json(user);
     } catch (error) {
