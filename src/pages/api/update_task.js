@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     try {
       await connectDB();
       let task;
-      if(id) {
+      if(taskId) {
         task = await Task.findOneAndUpdate({_id: taskId}, req.body, {runValidators: true});
         return res.status(200).json(task);
       }
