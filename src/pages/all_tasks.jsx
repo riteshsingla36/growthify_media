@@ -58,8 +58,11 @@ const updatedAtdateBodyTemplate = (rowData) => {
 
 const formatDate = (value) => {
   const date = new Date(value);
-  const localizedDateString = date.toLocaleDateString();
-  return localizedDateString;
+  return date.toLocaleDateString('en-IN', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+});
 };
 
   const isSelectable = (data) => data.status != "completed";
@@ -139,6 +142,7 @@ const onRowEditComplete = (e) => {
         <div className="card">
             <DataTable scrollable isDataSelectable={isRowSelectable} rowClassName={rowClassName} sortField="createdAt" removableSort sortOrder={-1} scrollHeight='90vh' showGridlines editMode='row' onRowEditComplete={onRowEditComplete} value={props.tasks} paginator rows={10} dataKey="_id" filters={filters} filterDisplay="row"
                     globalFilterFields={['name', 'country.name', 'representative.name', 'status']} emptyMessage="No customers found."  tableStyle={{ minWidth: '50rem' }}>
+                      <Column header="#" headerStyle={{ width: '3rem' }} body={(data, options) => options.rowIndex + 1}></Column>
                       {/* <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} field='_id'></Column> */}
                 <Column rowEditor headerStyle={{ width: '10%', minWidth: '2rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
                 <Column field="assignor" header="Assignor" editor={(options) => employeesEditor(options)} filter filterPlaceholder="Search by name" style={{ minWidth: '12rem' }} />
