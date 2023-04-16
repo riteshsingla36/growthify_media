@@ -1,3 +1,4 @@
+import { useCookie } from 'next-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Button from 'react-bootstrap/Button';
@@ -10,6 +11,10 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 
 function Header() {
   const router = useRouter();
+  const cookie = useCookie();
+
+  const cookies = cookie.get('growthify_user');
+
   return (
     <>
       {['sm'].map((expand) => (
@@ -29,13 +34,14 @@ function Header() {
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Link href="/login">Login</Link>
+                  {/* {cookies? <><Nav.Link href="/login">Login</Nav.Link></>: <></>} */}
+                  
                   <Nav.Link href="/signup">SignUp</Nav.Link>
-                  {router.route.includes('admin') ? <>
+                  {/* {router.route.includes('admin') ? <>
                   <Link href="/admin/addTask">Add Task</Link>
                   <Link href="/admin/addEmployee">Add Employee</Link>
                   <Link href="/admin/addClient">Add Client</Link>
-                  </> : <></>}
+                  </> : <></>} */}
                   {/* <NavDropdown
                     title="Dropdown"
                     id={`offcanvasNavbarDropdown-expand-${expand}`}
