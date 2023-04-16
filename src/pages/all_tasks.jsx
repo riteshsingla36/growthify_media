@@ -10,17 +10,15 @@ import { useCookie } from 'next-cookie';
 
 const AllTasks = (props) => {
   const [filters, setFilters] = useState({
-    assignor: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    assignee: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    client: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    'assignor.name': { value: null, matchMode: FilterMatchMode.CONTAINS },
+    'assignee.name': { value: null, matchMode: FilterMatchMode.CONTAINS },
+    'client.name': { value: null, matchMode: FilterMatchMode.CONTAINS },
     priority: { value: null, matchMode: FilterMatchMode.EQUALS },
     status: { value: null, matchMode: FilterMatchMode.EQUALS },
   });
 
   const [statuses] = useState(['inProgress', 'pending', 'completed']);
   const [priorities] = useState(['low', 'medium', 'high']);
-  const [rowClick, setRowClick] = useState(true);
-  const [selectedProduct, setSelectedProduct] = useState(null);
   const cookie = useCookie();
   const cookies = cookie.get('growthify_user');
 
