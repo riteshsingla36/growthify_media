@@ -1,7 +1,5 @@
 import React from 'react';
 import { InputText } from 'primereact/inputtext';
-
-import { Checkbox } from 'primereact/checkbox';
 import { Button } from 'primereact/button';
 
 const Login = () => {
