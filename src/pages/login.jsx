@@ -1,11 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import {useCookie} from 'next-cookie';
 
 const Login = () => {
-  const login = (e) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const router = useRouter();
+  const cookie = useCookie();
+  const login = async (e) => {
     e.preventDefault();
+    try {
+      const result = await axios.post('api/login', {
+        email,
+        password
+      })
+      if(result.status ===200) {
+        cookie.set('growthify_user', result.data)
+        alert("login Successful");
+        router.push("/")
+      }
+      else {
+        alert("login Failure");
+      }
+    } catch (error) {
+      if(error.response.status === 502) {
+        alert(error.response.data);
+      }
+      else {
+        alert("Something Went wrong");
+      }
+    }
   };
+
   return (
     <div className="flex align-items-center justify-content-center !bg-[#304562]">
       <div className="surface-card p-4 shadow-2 border-round w-full lg:w-6">
@@ -28,9 +57,11 @@ const Login = () => {
           </label>
           <InputText
             id="email"
-            type="text"
+            type="email"
             placeholder="Email address"
             className="w-full mb-3"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
 
@@ -42,6 +73,8 @@ const Login = () => {
             type="password"
             placeholder="Password"
             className="w-full mb-3"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
 

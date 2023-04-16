@@ -68,6 +68,10 @@ const userSchema = mongoose.Schema(
     stateCode: {
       type: String,
       trim: true,
+    },
+    isAdmin: {
+      type: Boolean,
+      default: false,
     }
   },
   {

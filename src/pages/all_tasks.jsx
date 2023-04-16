@@ -371,6 +371,15 @@ const AllTasks = (props) => {
 };
 
 export async function getServerSideProps(context) {
+  const cookies = context.req.cookies;
+  const { res } = context;
+
+  if (!cookies.growthify_user) {
+    res.setHeader('location', '/login');
+    res.statusCode = 302;
+    res.end();
+    return { props: {} };
+  }
   const tasks = await axios.get(
     'https://growthify-media.vercel.app/api/get_tasks'
   );
