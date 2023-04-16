@@ -274,7 +274,7 @@ const AllTasks = (props) => {
             bodyStyle={{ textAlign: 'center' }}
           ></Column>
           <Column
-            field="assignor"
+            field="assignor.name"
             header="Assignor"
             editor={(options) => employeesEditor(options)}
             filter
@@ -282,7 +282,7 @@ const AllTasks = (props) => {
             style={{ minWidth: '12rem' }}
           />
           <Column
-            field="assignee"
+            field="assignee.name"
             header="Assignee"
             editor={(options) => employeesEditor(options)}
             filter
@@ -290,7 +290,7 @@ const AllTasks = (props) => {
             style={{ minWidth: '12rem' }}
           />
           <Column
-            field="client"
+            field="client.name"
             header="Client"
             filter
             filterPlaceholder="Search by name"
@@ -341,7 +341,7 @@ const AllTasks = (props) => {
             style={{ minWidth: '12rem' }}
           />
           <Column
-            field="createdBy"
+            field="createdBy.name"
             header="CreatedBy"
             style={{ minWidth: '12rem' }}
           />

@@ -157,7 +157,6 @@ const CreateTask = (props) => {
                 value={link}
                 pattern="https://.*"
                 size="30"
-                required
                 onChange={(e) => setLink(e.target.value)}
               ></InputText>
             </div>
