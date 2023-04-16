@@ -7,9 +7,7 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";    
 import "primeflex/primeflex.css";
 
-import { useFavicon } from 'primereact/hooks';
 export default function App({ Component, pageProps }) {
-  useFavicon("https://growthifymedia.com/wp-content/uploads/2022/03/growthify-logo.png")
   return (
     <>
       <Header/>
