@@ -68,12 +68,7 @@ const userSchema = mongoose.Schema(
     stateCode: {
       type: String,
       trim: true,
-    },
-    createdBy: {
-      type: String,
-      trim: true,
-      required: true,
-    },
+    }
   },
   {
     versionKey: false,
