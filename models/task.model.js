@@ -3,17 +3,17 @@ const mongoose = require('mongoose');
 const taskSchema = mongoose.Schema({
     assignor: {
         type: mongoose.Types.ObjectId,
-        ref: 'user',
+        ref: 'User',
         trim: true
     },
     assignee: {
         type: mongoose.Types.ObjectId,
-        ref: 'user',
+        ref: 'User',
         trim: true
     },
     client: {
         type: mongoose.Types.ObjectId,
-        ref: 'user',
+        ref: 'User',
         trim: true
     },
     priority: {
@@ -53,7 +53,7 @@ const taskSchema = mongoose.Schema({
     },
     createdBy: {
         type: mongoose.Types.ObjectId,
-        ref: 'user',
+        ref: 'User',
         required: true
     },
     status: {
