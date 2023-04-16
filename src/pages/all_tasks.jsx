@@ -414,7 +414,6 @@ export async function getServerSideProps(context) {
       counts.inProgress++;
     }
   }
-  console.log(tasks.data)
   return {
     props: { tasks: tasks.data, clients, employees, counts },
   };
