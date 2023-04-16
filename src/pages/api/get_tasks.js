@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 import Task from 'models/task.model';
+import User from 'models/user.model';
 import { connectDB } from 'setup/connectDb';
 
 export default async function handler(req, res) {
@@ -12,7 +13,7 @@ export default async function handler(req, res) {
         tasks = await Task.find({assignee: req.query.assignee}).populate(['assignee', 'assignor', 'client', 'createdBy']);
       }
       else {
-        tasks = await Task.find({}).populate(['assignee', 'assignor', 'client', 'createdBy']);
+        tasks = await Task.find({}).populate({ path: ['assignee', 'assignor', 'client', 'createdBy'], model: User });
       }
       console.log(tasks, 'tasks')
       return res.status(200).json(tasks);
