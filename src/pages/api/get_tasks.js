@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         tasks = await Task.find({assignee: req.query.assignee}).populate(['assignee', 'assignor', 'client', 'createdBy']);
       }
       else {
-        tasks = await Task.find({}).populate({ path: ['assignee', 'assignor', 'client', 'createdBy'], model: User });
+        tasks = await Task.find({}).populate({ path: 'assignee', model: User });
       }
       console.log(tasks, 'tasks')
       return res.status(200).json(tasks);
