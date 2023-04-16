@@ -6,6 +6,7 @@ import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { Tag } from 'primereact/tag';
 import axios from 'axios';
+import { useCookie } from 'next-cookie';
 
 const AllTasks = (props) => {
   const [filters, setFilters] = useState({
@@ -20,6 +21,8 @@ const AllTasks = (props) => {
   const [priorities] = useState(['low', 'medium', 'high']);
   const [rowClick, setRowClick] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const cookie = useCookie();
+  const cookies = cookie.get('growthify_user');
 
   const statusItemTemplate = (option) => {
     return <Tag value={option} severity={getSeverity(option)} />;
@@ -132,17 +135,6 @@ const AllTasks = (props) => {
     );
   };
 
-  const clientEditor = (options) => {
-    return (
-      <Dropdown
-        value={options.value}
-        options={Object.keys(props.clients)}
-        onChange={(e) => options.editorCallback(e.value)}
-        placeholder="Select a Client"
-      />
-    );
-  };
-
   const employeesEditor = (options) => {
     return (
       <Dropdown
@@ -154,7 +146,17 @@ const AllTasks = (props) => {
     );
   };
 
-  const onRowEditComplete = (e) => {};
+  const onRowEditComplete = (e) => {
+    const newData = e.newData;
+    const oldData = e.data;
+    try {
+      axios.patch(`/api/update_task?taskId=${oldData._id}`, {assignee: newData.assignee, assignor: newData.assignor, status: newData.status, supportingLink: newData.supportingLink, supportingRemarks: newData.supportingRemarks, description: newData.description, updatedBy: cookies._id})
+      alert("task updated successfully")
+      window.location.reload();
+    } catch (error) {
+      alert('error');
+    }
+  };
 
   return (
     <>
@@ -294,7 +296,6 @@ const AllTasks = (props) => {
             header="Client"
             filter
             filterPlaceholder="Search by name"
-            editor={(options) => clientEditor(options)}
             style={{ minWidth: '12rem' }}
           />
           <Column
@@ -373,6 +374,7 @@ const AllTasks = (props) => {
 export async function getServerSideProps(context) {
   const cookies = context.req.cookies;
   const { res } = context;
+  const user = cookies.growthify_user;
 
   if (!cookies.growthify_user) {
     res.setHeader('location', '/login');
@@ -381,7 +383,7 @@ export async function getServerSideProps(context) {
     return { props: {} };
   }
   const tasks = await axios.get(
-    'https://growthify-media.vercel.app/api/get_tasks'
+    `https://growthify-media.vercel.app/api/get_tasks?assignee=${user._id}`
   );
   const usersData = await axios.get(
     'https://growthify-media.vercel.app/api/get_users'

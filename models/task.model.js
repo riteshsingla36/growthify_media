@@ -48,7 +48,8 @@ const taskSchema = mongoose.Schema({
         trim: true
     },
     updatedBy: {
-        type: String,
+        type: mongoose.Types.ObjectId,
+        ref: 'user',
         trim: true
     },
     createdBy: {

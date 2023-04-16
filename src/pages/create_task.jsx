@@ -76,7 +76,7 @@ const CreateTask = (props) => {
       </h1>
 
       <div className="w-full h-[100vh] flex justify-center items-center !bg-[#304562]">
-        <form action="#" method="POST" onSubmit={createTask}>
+        <form method="POST" onSubmit={createTask}>
           <div className="card !grid border-0 grid-cols-2 gap-4 !bg-[#304562]">
             <Dropdown
               value={assignor}
