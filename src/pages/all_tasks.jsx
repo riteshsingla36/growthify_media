@@ -158,7 +158,7 @@ const AllTasks = (props) => {
 
   return (
     <>
-      <div className="grid">
+      <div className="grid w-[95vw] m-auto">
         <div className="col-12 md:col-6 lg:col-3">
           <div className="surface-0 shadow-2 p-3 border-1 border-50 border-round">
             <div className="flex justify-content-between mb-3">
@@ -241,7 +241,7 @@ const AllTasks = (props) => {
         </div>
       </div>
 
-      <div className="card">
+      <div className="card w-[95vw] m-auto !h-[75vh]">
         <DataTable
           scrollable
           isDataSelectable={isRowSelectable}
