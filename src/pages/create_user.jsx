@@ -33,24 +33,54 @@ const CreateTask = (props) => {
     }]
 
 
-    const createUser = async () => {
-        const res = await axios.post("/api/create_user", {
-            name,
-            email,
-            phoneNo: phone,
-            userType: selectedUserType,
-            role,
-            userId,
-            status: status ? "ACTIVE" : "INACTIVE",
-            createdBy: ""
-        });
+    const createUser = async (e) => {
+        e.preventDefault();
+        try{
+            const res = await axios.post("/api/create_user", {
+                name,
+                email,
+                phoneNo: phone,
+                userType: selectedUserType.name,
+                role,
+                password,
+                userId,
+                projects,
+                status: status ? "ACTIVE" : "INACTIVE",
+                createdBy: ""
+            });
+            if(res.status === 200){
+                alert("User created successfully");
+                setName("");
+                setEmail("");
+                setPhone(null);
+                setSelectedUserType(null);
+                setRole("");
+                setPassword("");
+                setUserId("");
+                setProjects("");
+                setStatus(true);
+            }else {
+                alert("error while creating user");
+                setName("");
+                setEmail("");
+                setPhone(null);
+                setSelectedUserType(null);
+                setRole("");
+                setPassword("");
+                setUserId("");
+                setProjects("");
+                setStatus(true);
+            }
+        }catch(e){
+            console.log(e.message);
+        }
     }
 
     return (
         <>
             <h1 className='w-full m-auto text-center !bg-[#304562] text-white !pt-5'>CREATE USER</h1>
             <div className='w-full min-h-[60vh] flex justify-center items-center !bg-[#304562]'>
-                <form action="#" method='POST' onSubmit={createUser}>
+                <form method='POST' onSubmit={createUser}>
                     <div className="card !grid border-0 grid-cols-2 gap-4 !bg-[#304562]">
                         <span className="p-float-label">
                             <InputText id="name" value={name} onChange={(e) => setName(e.target.value)} />
