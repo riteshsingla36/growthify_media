@@ -13,7 +13,7 @@ function Header() {
   return (
     <>
       {['sm'].map((expand) => (
-        <Navbar key={expand} bg="light" expand={expand} className="mb-3">
+        <Navbar key={expand} expand={expand} className="bg-[#304562]">
           <Container fluid>
             <Navbar.Brand href="#">Growthify</Navbar.Brand>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />

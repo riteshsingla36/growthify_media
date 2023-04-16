@@ -39,14 +39,18 @@ const CreateTask = (props) => {
             const res = await axios.post("/api/create_user", {
                 name,
                 email,
-                phoneNo: phone,
-                userType: selectedUserType.name,
-                role,
                 password,
                 userId,
-                projects,
+                phoneNo: phone,
+                userType: selectedUserType.name,
                 status: status ? "ACTIVE" : "INACTIVE",
-                createdBy: ""
+                role,
+                projects,
+                billingAddress: address,
+                GSTIN: gst,
+                billingPhoneNo: billingPhone,
+                brandName: brandName,
+                stateCode: stateCode
             });
             if(res.status === 200){
                 alert("User created successfully");
