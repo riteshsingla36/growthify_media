@@ -9,11 +9,12 @@ export default async function handler(req, res) {
       await connectDB();
       let tasks;
       if(req.query.assignee) {
-        tasks = await Task.find({assignee: req.query.assignee}).populate('assignee');
+        tasks = await Task.find({assignee: req.query.assignee}).populate(['assignee', 'assignor', 'client', 'createdBy']);
       }
       else {
-        tasks = await Task.find({});
+        tasks = await Task.find({}).populate(['assignee', 'assignor', 'client', 'createdBy']);
       }
+      console.log(tasks, 'tasks')
       return res.status(200).json(tasks);
     } catch (error) {
       return res.status(500).json(error.message);
