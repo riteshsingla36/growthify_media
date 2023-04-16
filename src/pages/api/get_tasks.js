@@ -9,7 +9,7 @@ export default async function handler(req, res) {
       await connectDB();
       let tasks;
       if(req.query.assignee) {
-        tasks = await Task.find({assignee: req.query.assignee});
+        tasks = await Task.find({assignee: req.query.assignee}).populate(['assignee', 'assignor' ,'client', 'createdBy']);
       }
       else {
         tasks = await Task.find({});
