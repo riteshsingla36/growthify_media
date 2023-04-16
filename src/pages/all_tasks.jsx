@@ -347,7 +347,7 @@ const AllTasks = (props) => {
             style={{ minWidth: '12rem' }}
           />
           <Column
-            field="updatedBy"
+            field="updatedBy.name"
             header="UpdatedBy"
             style={{ minWidth: '12rem' }}
           />
@@ -374,17 +374,25 @@ const AllTasks = (props) => {
 export async function getServerSideProps(context) {
   const cookies = context.req.cookies;
   const { res } = context;
-  const user = cookies.growthify_user;
-
+  
   if (!cookies.growthify_user) {
     res.setHeader('location', '/login');
     res.statusCode = 302;
     res.end();
     return { props: {} };
   }
-  const tasks = await axios.get(
-    `https://growthify-media.vercel.app/api/get_tasks?assignee=${user._id}`
-  );
+  const user = JSON.parse(cookies.growthify_user);
+  let tasks
+  if(!user.isAdmin) {
+    tasks = await axios.get(
+      `https://growthify-media.vercel.app/api/get_tasks?assignee=${user._id}`
+    );
+  }
+  else {
+    tasks = await axios.get(
+      `https://growthify-media.vercel.app/api/get_tasks`
+    );
+  }
   const usersData = await axios.get(
     'https://growthify-media.vercel.app/api/get_users'
   );
