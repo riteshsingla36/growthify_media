@@ -6,7 +6,7 @@ import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { Tag } from 'primereact/tag';
 import axios from 'axios';
-import { useCookie } from 'next-cookie';
+import { getCookie } from 'cookies-next';
 
 const AllTasks = (props) => {
   const [filters, setFilters] = useState({
@@ -19,8 +19,7 @@ const AllTasks = (props) => {
 
   const [statuses] = useState(['inProgress', 'pending', 'completed']);
   const [priorities] = useState(['low', 'medium', 'high']);
-  const cookie = useCookie();
-  const cookies = cookie.get('growthify_user');
+  const cookies = getCookie('growthify_user');
 
   const statusItemTemplate = (option) => {
     return <Tag value={option} severity={getSeverity(option)} />;

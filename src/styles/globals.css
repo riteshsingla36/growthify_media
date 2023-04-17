@@ -17,6 +17,6 @@ body {
 }
 
 a {
-  color: inherit;
+  color: white !important;
   text-decoration: none;
 }

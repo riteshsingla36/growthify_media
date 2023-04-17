@@ -6,7 +6,7 @@ import { InputText } from 'primereact/inputtext';
 
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
-import { useCookie } from 'next-cookie';
+import { getCookie } from 'cookies-next';
 
 const CreateTask = (props) => {
   const [client, setClient] = useState(null);
@@ -21,7 +21,7 @@ const CreateTask = (props) => {
   const [desc, setDesc] = useState('');
   const clients = Object.values(props.clients);
   const employees = Object.values(props.employees);
-  const cookie = useCookie();
+  
   const priority = [
     {
       name: 'low',
@@ -52,7 +52,7 @@ const CreateTask = (props) => {
     setProjects(prj);
   };
 
-  const cookies = cookie.get('growthify_user');
+  const cookies = getCookie('growthify_user');
 
   const createTask = async () => {
     const res = await axios.post('/api/create_task', {

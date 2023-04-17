@@ -1,7 +1,8 @@
-import { useCookie } from 'next-cookie';
+import { deleteCookie, getCookie } from 'cookies-next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import Button from 'react-bootstrap/Button';
+import { useEffect, useState } from 'react';
+// import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
@@ -9,67 +10,55 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 
+import { Sidebar } from 'primereact/sidebar';
+import { Button } from 'primereact/button';
 function Header() {
   const router = useRouter();
-  const cookie = useCookie();
+  const [visibleRight, setVisibleRight] = useState(false);
 
-  const cookies = cookie.get('growthify_user');
+  let cookies = getCookie('growthify_user');
+  if (cookies) {
+    cookies = JSON.parse(cookies);
+  }
 
+  const signOut = async () => {
+    deleteCookie('growthify_user');
+    router.push('/login');
+  };
   return (
     <>
-      {['sm'].map((expand) => (
-        <Navbar key={expand} expand={expand} className="bg-[#304562]">
-          <Container fluid>
-            <Navbar.Brand href="/">Growthify</Navbar.Brand>
-            <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
-            <Navbar.Offcanvas
-              id={`offcanvasNavbar-expand-${expand}`}
-              aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
-              placement="end"
-            >
-              <Offcanvas.Header closeButton>
-                <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
-                  Growthify
-                </Offcanvas.Title>
-              </Offcanvas.Header>
-              <Offcanvas.Body>
-                <Nav className="justify-content-end flex-grow-1 pe-3">
-                  {/* {cookies? <><Nav.Link href="/login">Login</Nav.Link></>: <></>} */}
-                  
-                  <Nav.Link href="/signup">SignUp</Nav.Link>
-                  {/* {router.route.includes('admin') ? <>
-                  <Link href="/admin/addTask">Add Task</Link>
-                  <Link href="/admin/addEmployee">Add Employee</Link>
-                  <Link href="/admin/addClient">Add Client</Link>
-                  </> : <></>} */}
-                  {/* <NavDropdown
-                    title="Dropdown"
-                    id={`offcanvasNavbarDropdown-expand-${expand}`}
-                  >
-                    <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action4">
-                      Another action
-                    </NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href="#action5">
-                      Something else here
-                    </NavDropdown.Item>
-                  </NavDropdown> */}
-                </Nav>
-                {/* <Form className="d-flex">
-                  <Form.Control
-                    type="search"
-                    placeholder="Search"
-                    className="me-2"
-                    aria-label="Search"
-                  />
-                  <Button variant="outline-success">Search</Button>
-                </Form> */}
-              </Offcanvas.Body>
-            </Navbar.Offcanvas>
-          </Container>
-        </Navbar>
-      ))}
+      <div className="w-[100vw] flex justify-between items-center p-3">
+        <h4>Growthify</h4>
+        <Button
+          icon="pi pi-arrow-right"
+          onClick={() => setVisibleRight(true)}
+        />
+      </div>
+      <Sidebar
+        visible={visibleRight}
+        position="right"
+        onHide={() => setVisibleRight(false)}
+      >
+        <div className="flex flex-col gap-4">
+          {cookies && cookies.isAdmin ? (
+            <>
+              <Link href="/create_task">Create Task</Link>
+              <Link href="/create_user">Create User</Link>
+            </>
+          ) : (
+            <></>
+          )}
+
+          {cookies ? (
+            <>
+              <Link href="/all_tasks">All Tasks</Link>
+              <Button onClick={signOut}>SignOut</Button>
+            </>
+          ) : (
+            <Button onClick={() => router.push('/login')}>Login</Button>
+          )}
+        </div>
+      </Sidebar>
     </>
   );
 }

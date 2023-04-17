@@ -3,13 +3,13 @@ import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import {useCookie} from 'next-cookie';
+import {setCookie} from 'cookies-next';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
-  const cookie = useCookie();
+  
   const login = async (e) => {
     e.preventDefault();
     try {
@@ -18,9 +18,9 @@ const Login = () => {
         password
       })
       if(result.status ===200) {
-        cookie.set('growthify_user', result.data)
+        setCookie('growthify_user', result.data)
         alert("login Successful");
-        router.push("/")
+        router.push("/all_tasks")
       }
       else {
         alert("login Failure");
