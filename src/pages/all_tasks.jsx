@@ -46,10 +46,10 @@ const AllTasks = (props) => {
     return formatDate(rowData.deadline);
   };
   const createdAtdateBodyTemplate = (rowData) => {
-    return formatDate(rowData.deadline);
+    return formatDate(rowData.createdAt);
   };
   const updatedAtdateBodyTemplate = (rowData) => {
-    return formatDate(rowData.deadline);
+    return formatDate(rowData.updatedAt);
   };
 
   const formatDate = (value) => {
