@@ -157,6 +157,23 @@ const AllUsers = (props) => {
     }
   };
 
+  const descriptionEditor = (options) => {
+    return <InputText type="text" value={options.value} onChange={(e) => options.editorCallback(e.target.value)} />;
+};
+
+  const gstEditor = (options) => {
+    return <InputText type="text" value={options.value} onChange={(e) => options.editorCallback(e.target.value)} />;
+  };
+  const billingPhoneEditor = (options) => {
+    return <InputText type="text" value={options.value} onChange={(e) => options.editorCallback(e.target.value)} />;
+  };
+  const brandNameEditor = (options) => {
+    return <InputText type="text" value={options.value} onChange={(e) => options.editorCallback(e.target.value)} />;
+  };
+  const stateCodeEditor = (options) => {
+    return <InputText type="text" value={options.value} onChange={(e) => options.editorCallback(e.target.value)} />;
+  };
+
   return (
     <>
       <div className="card w-[95vw] m-auto !h-[75vh]">
@@ -194,13 +211,11 @@ const AllUsers = (props) => {
           <Column
             field="userId"
             header="User Id"
-            editor={(options) => employeesEditor(options)}
             style={{ minWidth: '12rem' }}
           />
           <Column
             field="name"
             header="Name"
-            editor={(options) => employeesEditor(options)}
             filter
             filterPlaceholder="Search by name"
             style={{ minWidth: '12rem' }}
@@ -208,7 +223,6 @@ const AllUsers = (props) => {
           <Column
             field="email"
             header="Email"
-            editor={(options) => employeesEditor(options)}
             filter
             filterPlaceholder="Search by name"
             style={{ minWidth: '12rem' }}
@@ -232,7 +246,6 @@ const AllUsers = (props) => {
           <Column
             field="userType"
             header="User Type"
-            editor={(options) => userTypeEditor(options)}
             showFilterMenu={false}
             filterMenuStyle={{ width: '14rem' }}
             style={{ minWidth: '12rem' }}
@@ -256,26 +269,31 @@ const AllUsers = (props) => {
           <Column
             field="billingAddress"
             header="Billing Address"
+            editor={(options) => descriptionEditor(options)}
             style={{ minWidth: '12rem' }}
           />
           <Column
             field="GSTIN"
             header="GSTIN"
+            editor={(options) => gstEditor(options)}
             style={{ minWidth: '12rem' }}
           />
           <Column
             field="billingPhoneNo"
             header="Billing Phone No."
+            editor={(options) => billingPhoneEditor(options)}
             style={{ minWidth: '12rem' }}
           />
           <Column
             field="brandName"
             header="Brand Name"
+            editor={(options) => brandNameEditor(options)}
             style={{ minWidth: '12rem' }}
           />
           <Column
             field="stateCode"
             header="State Code"
+            editor={(options) => stateCodeEditor(options)}
             sortable
             style={{ minWidth: '12rem' }}
           />
@@ -314,7 +332,6 @@ export async function getServerSideProps(context) {
     'https://growthify-media.vercel.app/api/get_users'
   );
 
-  console.log(usersData.data);
   return {
     props: { users: usersData.data },
   };
