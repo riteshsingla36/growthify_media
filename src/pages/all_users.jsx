@@ -60,6 +60,10 @@ const AllUsers = (props) => {
     return localizedDateString;
   };
 
+  const projectsBodyTemplate = (rowData) => {
+    return rowData.projects.join(",");
+  };
+
   const isSelectable = (data) => data.status != 'completed';
 
   const isRowSelectable = (event) =>
@@ -275,6 +279,7 @@ const AllUsers = (props) => {
           <Column
             field="projects"
             header="Projects"
+            body={projectsBodyTemplate}
             editor={(options) => projectCodeEditor(options)}
             sortable
             style={{ minWidth: '12rem' }}

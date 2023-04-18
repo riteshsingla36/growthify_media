@@ -52,6 +52,21 @@ const CreateTask = (props) => {
                 brandName: brandName,
                 stateCode: stateCode
             });
+            var channelName = `${name}_${userId}`;
+            channelName = channelName.replace(/ /g, '_');
+            channelName = channelName.replace(/-/g, '_');
+            channelName = channelName.toLowerCase();
+            channelName = channelName.replace(/\./g, '');
+            const channelId = await axios.post("/api/create_slack_channel", {channelName});
+            const employees = await axios.get("/api/get_users?userType=Employee");
+            let slackUserIds = [];
+
+            for(let employee of employees.data){
+                const userId = await axios.get(`/api/get_slack_userid?email=${employee.email}`);
+                slackUserIds.push(userId.data.userId);
+            }
+            await axios.post("/api/invite_users_tochannel", {channelId: channelId.data.channelId, userIds: slackUserIds});
+
             if(res.status === 200){
                 alert("User created successfully");
                 setName("");

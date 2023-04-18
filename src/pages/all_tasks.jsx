@@ -155,10 +155,11 @@ const AllTasks = (props) => {
 
 
   const onRowEditComplete = async (e) => {
+    const user = JSON.parse(cookies);
     const newData = e.newData;
     const oldData = e.data;
     try {
-      await axios.patch(`/api/update_task?taskId=${oldData._id}`, {assignee: newData.assignee, assignor: newData.assignor, status: newData.status, supportingLink: newData.supportingLink, supportingRemarks: newData.supportingRemarks, description: newData.description, updatedBy: cookies._id})
+      await axios.patch(`/api/update_task?taskId=${oldData._id}`, {assignee: newData.assignee, assignor: newData.assignor, status: newData.status, supportingLink: newData.supportingLink, supportingRemarks: newData.supportingRemarks, description: newData.description, updatedBy: user._id})
       alert("task updated successfully")
       window.location.reload();
     } catch (error) {
