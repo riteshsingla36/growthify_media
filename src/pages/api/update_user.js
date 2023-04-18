@@ -5,7 +5,7 @@ import { connectDB } from 'setup/connectDb';
 
 export default async function handler(req, res) {
   if (req.method === 'PATCH') {
-    const id = req.query.id;
+    const id = req.query.userId;
     try {
       await connectDB();
       let user;

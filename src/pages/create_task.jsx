@@ -55,19 +55,45 @@ const CreateTask = (props) => {
   const cookies = getCookie('growthify_user');
 
   const createTask = async () => {
-    const res = await axios.post('/api/create_task', {
-      assignor: assignor._id,
-      assignee: assignee._id,
-      client: assignor._id,
-      selectedProject: selectedProject.name,
-      selectedPriority: selectedPriority.name,
-      deadline: date,
-      description: desc,
-      supportingLink: link,
-      supportingRemarks: remarks,
-      createdBy: cookies._id,
-    });
+    try{
+      const res = await axios.post('/api/create_task', {
+        assignor: assignor._id,
+        assignee: assignee._id,
+        client: assignor._id,
+        selectedProject: selectedProject.name,
+        selectedPriority: selectedPriority.name,
+        deadline: date,
+        description: desc,
+        supportingLink: link,
+        supportingRemarks: remarks,
+        createdBy: cookies._id,
+      });
+      sendMessageToSlackChannel("ritesh_kumar_emp_001", "New Task Created");
+    }catch(e){
+      console.log(e.message);
+    }
   };
+
+  async function sendMessageToSlackChannel(channelName, message) {
+    const slackToken = "xoxb-3713528419799-5043420801206-VQhUoBJTuqA49cLiO74l86OO";
+    const slackChannel = "#" + channelName;
+  
+    const options = {
+      headers: {
+        "Authorization": "Bearer " + slackToken,
+        "Content-Type": "application/json"
+      }
+    };
+  
+    const url = `https://slack.com/api/chat.postMessage?channel=${encodeURIComponent(slackChannel)}`;
+    const data = {
+      text: message,
+      channel: slackChannel
+    };
+  
+    const response = await axios.post(url, data, options);
+    console.log(response.data);
+  }
 
   return (
     <>

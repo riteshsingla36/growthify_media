@@ -42,6 +42,8 @@ const AllUsers = (props) => {
         return 'warning';
       case 'high':
         return 'danger';
+      case 'INACTIVE':
+        return 'danger';
     }
   };
 
@@ -145,22 +147,29 @@ const AllUsers = (props) => {
     );
   };
 
-  const onRowEditComplete = (e) => {
+  const onRowEditComplete = async (e) => {
     const newData = e.newData;
     const oldData = e.data;
     try {
-      axios.patch(`/api/update_task?taskId=${oldData._id}`, {assignee: newData.assignee, assignor: newData.assignor, status: newData.status, supportingLink: newData.supportingLink, supportingRemarks: newData.supportingRemarks, description: newData.description, updatedBy: cookies._id})
-      alert("task updated successfully")
+      await axios.patch(`/api/update_user?userId=${oldData._id}`, {
+        status: newData.status,
+        billingAddress: newData.billingAddress,
+        projects: newData.projects,
+        GSTIN: newData.GSTIN,
+        billingPhoneNo: newData.billingPhoneNo,
+        brandName: newData.brandName,
+        stateCode: newData.stateCode
+      })
+      alert("User updated successfully")
       window.location.reload();
     } catch (error) {
       alert('error');
     }
   };
 
-  const descriptionEditor = (options) => {
+  const billingAddressEditor = (options) => {
     return <InputText type="text" value={options.value} onChange={(e) => options.editorCallback(e.target.value)} />;
 };
-
   const gstEditor = (options) => {
     return <InputText type="text" value={options.value} onChange={(e) => options.editorCallback(e.target.value)} />;
   };
@@ -171,6 +180,9 @@ const AllUsers = (props) => {
     return <InputText type="text" value={options.value} onChange={(e) => options.editorCallback(e.target.value)} />;
   };
   const stateCodeEditor = (options) => {
+    return <InputText type="text" value={options.value} onChange={(e) => options.editorCallback(e.target.value)} />;
+  };
+  const projectCodeEditor = (options) => {
     return <InputText type="text" value={options.value} onChange={(e) => options.editorCallback(e.target.value)} />;
   };
 
@@ -263,13 +275,14 @@ const AllUsers = (props) => {
           <Column
             field="projects"
             header="Projects"
+            editor={(options) => projectCodeEditor(options)}
             sortable
             style={{ minWidth: '12rem' }}
           />
           <Column
             field="billingAddress"
             header="Billing Address"
-            editor={(options) => descriptionEditor(options)}
+            editor={(options) => billingAddressEditor(options)}
             style={{ minWidth: '12rem' }}
           />
           <Column
@@ -331,7 +344,6 @@ export async function getServerSideProps(context) {
   const usersData = await axios.get(
     'https://growthify-media.vercel.app/api/get_users'
   );
-
   return {
     props: { users: usersData.data },
   };
