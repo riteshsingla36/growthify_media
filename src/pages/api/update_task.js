@@ -6,6 +6,7 @@ import { connectDB } from 'setup/connectDb';
 export default async function handler(req, res) {
   if (req.method === 'PATCH') {
     const taskId = req.query.taskId;
+
     try {
       await connectDB();
       let task;

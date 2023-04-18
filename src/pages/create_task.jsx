@@ -54,19 +54,35 @@ const CreateTask = (props) => {
 
   const cookies = getCookie('growthify_user');
 
-  const createTask = async () => {
-    const res = await axios.post('/api/create_task', {
-      assignor: assignor._id,
-      assignee: assignee._id,
-      client: assignor._id,
-      selectedProject: selectedProject.name,
-      selectedPriority: selectedPriority.name,
-      deadline: date,
-      description: desc,
-      supportingLink: link,
-      supportingRemarks: remarks,
-      createdBy: cookies._id,
-    });
+  const createTask = async (e) => {
+    e.preventDefault();
+    const user = JSON.parse(cookies);
+    try{
+      const res = await axios.post('/api/create_task', {
+        assignor: assignor._id,
+        assignee: assignee._id,
+        client: client._id,
+        selectedProject: selectedProject.name,
+        selectedPriority: selectedPriority.name,
+        deadline: date,
+        description: desc,
+        supportingLink: link,
+        supportingRemarks: remarks,
+        createdBy: user._id,
+      });
+
+      const slackUserId = await axios.get(`/api/get_slack_userid?email=${assignee.email}`);
+      var channelName = `${client.name}_${client.userId}`;
+        channelName = channelName.replace(/ /g, '_');
+        channelName = channelName.replace(/-/g, '_');
+        channelName = channelName.toLowerCase();
+        channelName = channelName.replace(/\./g, '');
+        var message = `Date: ${(new Date()).toLocaleDateString()} \n Assigned By : ${assignor.name} \n Assigned To: <@${slackUserId.data.userId}> \n Client: ${client.name} \n Description of task: ${desc} \n Deadline: ${(date).toLocaleDateString()}`;
+        await axios.post("/api/send_slack_message", {channelName, message});
+    }catch(e){
+      alert(e.message);
+      console.log(e.message);
+    }
   };
 
   return (

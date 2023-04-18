@@ -11,7 +11,6 @@ export default async function handler(req, res) {
       const projects = body.projects.split(",");
       body.projects = projects;
     }
-    console.log(body, 'body')
     try {
       await connectDB();
       const user = await User.create(body);

@@ -143,11 +143,23 @@ const AllTasks = (props) => {
     );
   };
 
-  const onRowEditComplete = (e) => {
+  const descriptionEditor = (options) => {
+    return <InputText type="text" value={options.value} onChange={(e) => options.editorCallback(e.target.value)} />;
+  };
+  const supportingLinkEditor = (options) => {
+    return <InputText type="text" value={options.value} onChange={(e) => options.editorCallback(e.target.value)} />;
+  };
+  const supportingRemarkEditor = (options) => {
+    return <InputText type="text" value={options.value} onChange={(e) => options.editorCallback(e.target.value)} />;
+  };
+
+
+  const onRowEditComplete = async (e) => {
+    const user = JSON.parse(cookies);
     const newData = e.newData;
     const oldData = e.data;
     try {
-      axios.patch(`/api/update_task?taskId=${oldData._id}`, {assignee: newData.assignee, assignor: newData.assignor, status: newData.status, supportingLink: newData.supportingLink, supportingRemarks: newData.supportingRemarks, description: newData.description, updatedBy: cookies._id})
+      await axios.patch(`/api/update_task?taskId=${oldData._id}`, {assignee: newData.assignee, assignor: newData.assignor, status: newData.status, supportingLink: newData.supportingLink, supportingRemarks: newData.supportingRemarks, description: newData.description, updatedBy: user._id})
       alert("task updated successfully")
       window.location.reload();
     } catch (error) {
@@ -326,16 +338,19 @@ const AllTasks = (props) => {
           <Column
             field="description"
             header="Description"
+            editor={(options) => descriptionEditor(options)}
             style={{ minWidth: '12rem' }}
           />
           <Column
             field="supportingLink"
             header="Supporting Link"
+            editor={(options) => supportingLinkEditor(options)}
             style={{ minWidth: '12rem' }}
           />
           <Column
             field="supportingRemarks"
             header="Supporting Remarks"
+            editor={(options) => supportingRemarkEditor(options)}
             style={{ minWidth: '12rem' }}
           />
           <Column

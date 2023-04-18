@@ -5,16 +5,22 @@ import { connectDB } from 'setup/connectDb';
 
 export default async function handler(req, res) {
   if (req.method === 'PATCH') {
-    const id = req.query.id;
+    const id = req.query.userId;
     try {
       await connectDB();
       let user;
+      let body = req.body;
       if(id) {
-        user = await User.findOneAndUpdate({_id: id}, req.body, {runValidators: true});
+        if(body.projects) {
+          const projects = body.projects.split(",");
+          body.projects = projects;
+        }
+        user = await User.findOneAndUpdate({_id: id}, body, {runValidators: true});
         return res.status(200).json(user);
       }
       return res.status(200).json({})
     } catch (error) {
+      console.log(error.message);
       return res.status(500).json(error.message);
     }
   }
