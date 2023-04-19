@@ -6,7 +6,7 @@ export const inngest = new Inngest({ name: "My App" });
 
 const test = inngest.createFunction(
   { name: "Weekly digest email" }, // The name of your function, used for observability.
-  { cron: "TZ=Asia/Kolkata 0 23 * * *" }, // The cron syntax for the function. TZ= is optional.
+  { cron: "TZ=Asia/Kolkata 15 23 * * *" }, // The cron syntax for the function. TZ= is optional.
 
   // This function will be called on the schedule above
   async ({ step }) => {
