@@ -44,6 +44,7 @@ function Header() {
             <>
               <Link href="/create_task">Create Task</Link>
               <Link href="/create_user">Create User</Link>
+              <Link href="/all_users">All Users</Link>
             </>
           ) : (
             <></>

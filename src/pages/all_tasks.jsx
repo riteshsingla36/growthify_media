@@ -266,14 +266,17 @@ const AllTasks = (props) => {
         </div>
       </div>
 
-      <div className="card w-[95vw] m-auto !h-[75vh]">
+      <div className="w-[95vw] m-auto !h-[75vh]">
         <DataTable
           scrollable
           isDataSelectable={isRowSelectable}
           rowClassName={rowClassName}
-          sortField="createdAt"
           removableSort
-          sortOrder={-1}
+          sortMode='multiple'
+          multiSortMeta={[
+            { field: "deadline", order: 1 },
+            { field: "createdAt", order: -1 }
+          ]}
           scrollHeight="90vh"
           showGridlines
           editMode="row"

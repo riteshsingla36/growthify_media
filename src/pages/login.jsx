@@ -18,7 +18,9 @@ const Login = () => {
         password
       })
       if(result.status ===200) {
-        setCookie('growthify_user', result.data)
+        setCookie('growthify_user', result.data, {
+          maxAge: 5 * 60 * 60
+        })
         alert("login Successful");
         router.push("/all_tasks")
       }

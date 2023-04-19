@@ -192,7 +192,7 @@ const AllUsers = (props) => {
 
   return (
     <>
-      <div className="card w-[95vw] m-auto !h-[75vh]">
+      <div className="w-[95vw] m-auto !h-[75vh]">
         <DataTable
           scrollable
           isDataSelectable={isRowSelectable}
