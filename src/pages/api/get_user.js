@@ -11,12 +11,11 @@ export default async function handler(req, res) {
       let user;
       if(userId) {
         user = await User.findOne({userId: userId});
+        return res.status(200).json(user);
       }
-      else {
-        user = await User.findOne({});
-      }
-      return res.status(200).json(user);
+      throw new Error('please provide userId to get user')
     } catch (error) {
+      console.error(error.message);
       return res.status(500).json(error.message);
     }
   }

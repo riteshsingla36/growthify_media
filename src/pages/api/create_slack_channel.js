@@ -28,11 +28,11 @@ export default async function handler(req, res) {
                 return res.status(200).json({channelId: channelId});
             } else {
                 const error = data.error;
-                console.log("Error creating channel: " + error);
-                return res.status(500).json({ message: error });
+                throw new Error(error);
             }
         } catch (error) {
-            return res.status(500).json(error.message);
+            console.error(error.message);
+            return res.status(500).json({message: error.message});
         }
 
     }

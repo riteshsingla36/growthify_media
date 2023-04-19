@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     try {
         const token = process.env.SLACK_TOKEN;
         const apiUrl = "https://slack.com/api/users.lookupByEmail?email=" + encodeURIComponent(req.query.email);
-        console.log(req.query.email, " user id ");
+
         const headers = {
           "Authorization": "Bearer " + token
         };
@@ -16,8 +16,9 @@ export default async function handler(req, res) {
         if (data.ok) {
             return res.status(200).json({userId: data.user.id});
         }
-        return res.status(500).json({message: data.error});
+        throw new Error(data.error);
     } catch (error) {
+      console.error(error.message);
       return res.status(500).json(error.message);
     }
 

@@ -10,11 +10,11 @@ export default async function handler(req, res) {
       await connectDB();
       const user = await User.findOne({email: body.email});
       if(user.password != body.password) {
-        return res.status(502).send("Password is incorrect")
+        throw new Error("Password is incorrect");
       }
       return res.status(200).json(user);
     } catch (error) {
-      console.log(error.message);
+      console.error(error.message);
       return res.status(500).json(error.message);
     }
   }

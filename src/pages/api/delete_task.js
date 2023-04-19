@@ -13,8 +13,9 @@ export default async function handler(req, res) {
         task = await Task.findOneAndDelete({_id: taskId});
         return res.status(200).json(task);
       }
-      return res.status(200).json({})
+      throw new Error('Please provide a taskId to delete the task');
     } catch (error) {
+      console.error(error.message);
       return res.status(500).json(error.message);
     }
   }

@@ -23,11 +23,12 @@ export default async function handler(req, res) {
             const response = await axios.post(url, data, options);
             const responseData = response.data;
             if (responseData.ok) {
-                console.log("User invited to channel");
+                console.debug("User invited to channel");
                 return res.status(200).json({message: "Invited Successfull"})
             }
-            return res.status(500).json(responseData.error);
+            throw new Error(responseData.error);
         } catch (error) {
+            console.error(error.message);
             return res.status(500).json(error.message);
         }
     }

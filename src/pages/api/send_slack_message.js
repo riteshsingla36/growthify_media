@@ -19,9 +19,10 @@ export default async function handler(req, res) {
         text: req.body.message,
         channel: slackChannel
       };
-      const response = await axios.post(url, data, options);
+      await axios.post(url, data, options);
       return res.status(200).json({message: "success"});
     } catch (error) {
+      console.error(error.message);
       return res.status(500).json(error.message);
     }
   }

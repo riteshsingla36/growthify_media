@@ -14,9 +14,9 @@ export default async function handler(req, res) {
         task = await Task.findOneAndUpdate({_id: taskId}, req.body, {runValidators: true});
         return res.status(200).json(task);
       }
-      return res.status(200).json({})
+      throw new Error('please provide taskId to update the task');
     } catch (error) {
-      console.log(error.message);
+      console.error(error.message);
       return res.status(500).json(error.message);
     }
   }

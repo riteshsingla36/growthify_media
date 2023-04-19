@@ -16,7 +16,7 @@ export default async function handler(req, res) {
       const user = await User.create(body);
       return res.status(200).json(user);
     } catch (error) {
-      console.log(error.message);
+      console.error(error.message);
       return res.status(500).json(error.message);
     }
   }
