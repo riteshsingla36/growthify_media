@@ -72,6 +72,14 @@ const userSchema = mongoose.Schema(
     isAdmin: {
       type: Boolean,
       default: false,
+    },
+    slackChannelName: {
+      type: String,
+      trim: true
+    },
+    slackUserId: {
+      type: String,
+      trim: true
     }
   },
   {

@@ -18,7 +18,7 @@ export default async function handler(req, res) {
 
             const databody = {
                 name: channelName,
-                is_private: false
+                is_private: req.body.is_private || false
             }
 
             const response = await axios.post(apiUrl, databody, options);

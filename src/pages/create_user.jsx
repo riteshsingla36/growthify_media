@@ -50,22 +50,43 @@ const CreateTask = (props) => {
                 brandName: brandName,
                 stateCode: stateCode
             });
-            if (selectedUserType.name === "Client") {
-                var channelName = `${name}_${userId}`;
-                channelName = channelName.replace(/ /g, '_');
-                channelName = channelName.replace(/-/g, '_');
-                channelName = channelName.toLowerCase();
-                channelName = channelName.replace(/\./g, '');
-                const channelId = await axios.post("/api/create_slack_channel", { channelName });
-                const employees = await axios.get("/api/get_users?userType=Employee");
-                let slackUserIds = [];
+            
+            var channelName = `${name}_${userId}`;
+            channelName = channelName.replace(/ /g, '_');
+            channelName = channelName.replace(/-/g, '_');
+            channelName = channelName.toLowerCase();
+            channelName = channelName.replace(/\./g, '');
 
+            let data = {channelName: channelName}
+            if(selectedUserType.name === 'Employee') {
+                data.is_private = true;
+            }
+            const channelId = await axios.post("/api/create_slack_channel", data);
+
+            let slackUserIds = [];
+            
+            if(selectedUserType.name === "Client") {
+                const employees = await axios.get("/api/get_users?userType=Employee");
                 for (let employee of employees.data) {
                     const userId = await axios.get(`/api/get_slack_userid?email=${employee.email}`);
                     slackUserIds.push(userId.data.userId);
                 }
-                await axios.post("/api/invite_users_tochannel", { channelId: channelId.data.channelId, userIds: slackUserIds });
             }
+            else {
+                const userId = await axios.get(`/api/get_slack_userid?email=${email}`);
+                slackUserIds.push(userId.data.userId);
+            }
+
+            await axios.post("/api/invite_users_tochannel", { channelId: channelId.data.channelId, userIds: slackUserIds });
+            
+            let updatedUserData = {
+                slackChannelName: channelName
+            }
+            if(selectedUserType.name === "Employee") {
+                updatedUserData.slackUserId = slackUserIds[0];
+            }
+            
+            await axios.patch(`/api/update_user?userId=${res.data._id}`, updatedUserData);
 
             if (res.status === 200) {
                 alert("User created successfully");
@@ -91,7 +112,7 @@ const CreateTask = (props) => {
                 setStatus(true);
             }
         } catch (e) {
-            alert(error.response.data);
+            alert(e.response.data);
         }
     }
 
