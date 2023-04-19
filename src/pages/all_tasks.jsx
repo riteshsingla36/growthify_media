@@ -160,10 +160,24 @@ const AllTasks = (props) => {
     const oldData = e.data;
     try {
       await axios.patch(`/api/update_task?taskId=${oldData._id}`, {assignee: newData.assignee, assignor: newData.assignor, status: newData.status, supportingLink: newData.supportingLink, supportingRemarks: newData.supportingRemarks, description: newData.description, updatedBy: user._id})
+      if(newData.status === 'completed') {
+        var message = `<!here> \n Date: ${new Date().toLocaleDateString()} \n Assigned To: <@${newData.assignee.slackUserId}> \n Client: ${
+          newData.client.name
+        } \n Description of task: ${newData.description} \n Task completed successfully`;
+  
+        await axios.post('/api/send_slack_message', {
+          channelName: newData.client.slackChannelName,
+          message,
+        });
+        await axios.post('/api/send_slack_message', {
+          channelName: newData.assignee.slackChannelName,
+          message,
+        });
+      }
       alert("task updated successfully")
       window.location.reload();
     } catch (error) {
-      alert(error.response.data);
+      alert(error.response);
     }
   };
 

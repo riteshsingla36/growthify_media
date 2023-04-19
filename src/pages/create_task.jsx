@@ -21,7 +21,7 @@ const CreateTask = (props) => {
   const [desc, setDesc] = useState('');
   const clients = Object.values(props.clients);
   const employees = Object.values(props.employees);
-  
+
   const priority = [
     {
       name: 'low',
@@ -57,7 +57,7 @@ const CreateTask = (props) => {
   const createTask = async (e) => {
     e.preventDefault();
     const user = JSON.parse(cookies);
-    try{
+    try {
       const res = await axios.post('/api/create_task', {
         assignor: assignor._id,
         assignee: assignee._id,
@@ -71,16 +71,24 @@ const CreateTask = (props) => {
         createdBy: user._id,
       });
 
-      const slackUserId = await axios.get(`/api/get_slack_userid?email=${assignee.email}`);
-      var channelName = `${client.name}_${client.userId}`;
-        channelName = channelName.replace(/ /g, '_');
-        channelName = channelName.replace(/-/g, '_');
-        channelName = channelName.toLowerCase();
-        channelName = channelName.replace(/\./g, '');
-        var message = `Date: ${(new Date()).toLocaleDateString()} \n Assigned By : ${assignor.name} \n Assigned To: <@${slackUserId.data.userId}> \n Client: ${client.name} \n Description of task: ${desc} \n Deadline: ${(date).toLocaleDateString()}`;
-        await axios.post("/api/send_slack_message", {channelName, message});
-    }catch(e){
-      alert(error.response.data);
+      var message = `Date: ${new Date().toLocaleDateString()} \n Assigned By : ${
+        assignor.name
+      } \n Assigned To: <@${assignee.slackUserId}> \n Client: ${
+        client.name
+      } \n Description of task: ${desc} \n Deadline: ${date.toLocaleDateString()}`;
+
+      await axios.post('/api/send_slack_message', {
+        channelName: client.slackChannelName,
+        message,
+      });
+      await axios.post('/api/send_slack_message', {
+        channelName: assignee.slackChannelName,
+        message,
+      });
+      alert("Task sent successfully");
+      window.location.reload();
+    } catch (e) {
+      alert(e.response.data);
     }
   };
 

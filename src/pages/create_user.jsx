@@ -68,8 +68,7 @@ const CreateTask = (props) => {
             if(selectedUserType.name === "Client") {
                 const employees = await axios.get("/api/get_users?userType=Employee");
                 for (let employee of employees.data) {
-                    const userId = await axios.get(`/api/get_slack_userid?email=${employee.email}`);
-                    slackUserIds.push(userId.data.userId);
+                    slackUserIds.push(employee.slackUserId);
                 }
             }
             else {
