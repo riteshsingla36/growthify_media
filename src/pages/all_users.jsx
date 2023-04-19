@@ -155,7 +155,7 @@ const AllUsers = (props) => {
     const newData = e.newData;
     const oldData = e.data;
     try {
-      await axios.patch(`/api/update_user`, {
+      await axios.patch(`/api/update_user?userId=${oldData._id}`, {
         status: newData.status,
         billingAddress: newData.billingAddress,
         projects: newData.projects,
