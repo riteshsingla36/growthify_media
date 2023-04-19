@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Dropdown } from 'primereact/dropdown';
 import axios from 'axios';
-import { Calendar } from 'primereact/calendar';
 import { InputText } from 'primereact/inputtext';
 import { InputMask } from 'primereact/inputmask';
 import { ToggleButton } from 'primereact/togglebutton';
-import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
 import { Password } from 'primereact/password';
 
@@ -93,7 +91,7 @@ const CreateTask = (props) => {
                 setStatus(true);
             }
         } catch (e) {
-            console.log(e.message);
+            alert(error.response.data);
         }
     }
 

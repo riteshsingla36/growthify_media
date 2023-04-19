@@ -155,7 +155,7 @@ const AllUsers = (props) => {
     const newData = e.newData;
     const oldData = e.data;
     try {
-      await axios.patch(`/api/update_user?userId=${oldData._id}`, {
+      await axios.patch(`/api/update_user`, {
         status: newData.status,
         billingAddress: newData.billingAddress,
         projects: newData.projects,
@@ -167,7 +167,7 @@ const AllUsers = (props) => {
       alert("User updated successfully")
       window.location.reload();
     } catch (error) {
-      alert('error');
+      alert(error.response.data);
     }
   };
 

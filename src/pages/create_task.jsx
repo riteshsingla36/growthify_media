@@ -80,8 +80,7 @@ const CreateTask = (props) => {
         var message = `Date: ${(new Date()).toLocaleDateString()} \n Assigned By : ${assignor.name} \n Assigned To: <@${slackUserId.data.userId}> \n Client: ${client.name} \n Description of task: ${desc} \n Deadline: ${(date).toLocaleDateString()}`;
         await axios.post("/api/send_slack_message", {channelName, message});
     }catch(e){
-      alert(e.message);
-      console.log(e.message);
+      alert(error.response.data);
     }
   };
 

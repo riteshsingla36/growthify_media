@@ -163,7 +163,7 @@ const AllTasks = (props) => {
       alert("task updated successfully")
       window.location.reload();
     } catch (error) {
-      alert('error');
+      alert(error.response.data);
     }
   };
 
