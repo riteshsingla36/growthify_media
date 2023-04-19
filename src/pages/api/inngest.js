@@ -13,7 +13,6 @@ const test = inngest.createFunction(
     return 'hello' // You can write whatever you want here.
   }
 );
-
   
 // Create an API that hosts zero functions
 export default serve(inngest, [test]);
