@@ -7,6 +7,8 @@ import { Dropdown } from 'primereact/dropdown';
 import { Tag } from 'primereact/tag';
 import axios from 'axios';
 import { getCookie } from 'cookies-next';
+import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog';
 
 const AllUsers = (props) => {
   const [filters, setFilters] = useState({
@@ -15,7 +17,8 @@ const AllUsers = (props) => {
     userType: { value: null, matchMode: FilterMatchMode.EQUALS },
     status: { value: null, matchMode: FilterMatchMode.EQUALS },
   });
-
+  const [visible, setVisible] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
   const [statuses] = useState(['ACTIVE', 'INACTIVE']);
   const [userType] = useState(['Employee', 'Client']);
   const cookies = getCookie('growthify_user');
@@ -77,6 +80,12 @@ const AllUsers = (props) => {
       <Tag value={rowData.status} severity={getSeverity(rowData.status)} />
     );
   };
+
+  const invoiceBodyTemplate = (rowData) => {
+    return (
+      <Button icon="pi pi-download" tooltip='Download Invoice' onClick={() => {setVisible(true); setSelectedUser(rowData)}} tooltipOptions={{position: 'bottom'}} rounded outlined severity="success" aria-label="Search" className='' />
+    )
+  }
 
   const statusRowFilterTemplate = (options) => {
     return (
@@ -189,6 +198,12 @@ const AllUsers = (props) => {
   const projectCodeEditor = (options) => {
     return <InputText type="text" value={options.value} onChange={(e) => options.editorCallback(e.target.value)} />;
   };
+  const footerContent = (
+    <div>
+        <Button label="No" icon="pi pi-times" onClick={() => setVisible(false)} className="p-button-text" />
+        <Button label="Yes" icon="pi pi-check" onClick={() => setVisible(false)} autoFocus />
+    </div>
+);
 
   return (
     <>
@@ -223,7 +238,7 @@ const AllUsers = (props) => {
             rowEditor
             headerStyle={{ width: '10%', minWidth: '2rem' }}
             bodyStyle={{ textAlign: 'center' }}
-          ></Column>
+          />
           <Column
             field="userId"
             header="User Id"
@@ -329,7 +344,73 @@ const AllUsers = (props) => {
             sortable
             style={{ minWidth: '12rem' }}
           />
+          <Column
+            
+            body={invoiceBodyTemplate}
+          >
+          </Column>
+        
         </DataTable>
+        <Dialog header="Create Invoice" visible={visible} position='right' style={{ width: '50vw' }} onHide={() => setVisible(false)} footer={footerContent} resizable maximizable>
+          {selectedUser && <div className='mt-10 flex flex-row gap-4'>
+            <span className='flex flex-col gap-4'>
+
+              <span className="p-float-label">
+                <InputText id="username" defaultValue={selectedUser.name} disabled />
+                <label htmlFor="username">Name</label>
+              </span>
+
+              <span className="p-float-label">
+                <InputText id="email" defaultValue={selectedUser.email} disabled/>
+                <label htmlFor="email">email</label>
+              </span>
+
+              <span className="p-float-label">
+                <InputText id="billingPhoneNo" defaultValue={selectedUser.billingPhoneNo} disabled/>
+                <label htmlFor="billingPhoneNo">billingPhoneNo</label>
+              </span>
+
+              <span className="p-float-label">
+                <InputText id="billingAddress" defaultValue={selectedUser.billingAddress} disabled/>
+                <label htmlFor="billingAddress">billingAddress</label>
+              </span>
+
+              <span className="p-float-label">
+                <InputText id="GSTIN" defaultValue={selectedUser.GSTIN} disabled/>
+                <label htmlFor="GSTIN">GSTIN</label>
+              </span>
+
+              <span className="p-float-label">
+                <InputText id="brandName" defaultValue={selectedUser.brandName} disabled/>
+                <label htmlFor="brandName">brandName</label>
+              </span>
+
+              <span className="p-float-label">
+                <InputText id="stateCode" defaultValue={selectedUser.stateCode} disabled/>
+                <label htmlFor="stateCode">stateCode</label>
+              </span>
+            </span>
+
+            <span className='flex flex-col gap-4'>
+              <span className="p-float-label">
+                <InputText id="itemDescription" />
+                <label htmlFor="itemDescription">itemDescription</label>
+              </span>
+
+              <span className="p-float-label">
+                <InputText id="itemQty" />
+                <label htmlFor="itemQty">itemQty</label>
+              </span>
+
+              <span className="p-float-label">
+                <InputText id="amount" />
+                <label htmlFor="amount">amount</label>
+              </span>
+            </span>
+
+          </div>
+          }
+        </Dialog>
       </div>
     </>
   );

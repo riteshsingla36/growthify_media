@@ -11,10 +11,6 @@ export default async function handler(req, res) {
       let user;
       let body = req.body;
       if(id) {
-        if(body.projects) {
-          const projects = body.projects.split(",");
-          body.projects = projects;
-        }
         user = await User.findOneAndUpdate({_id: id}, body, {runValidators: true});
         return res.status(200).json(user);
       }
